@@ -1,0 +1,5 @@
+resources:
+  - ./istio.yaml
+#  - ./203-local-gateway.yaml
+#  - ./300-gateway-local.yaml
+#  - ./300-gateway.yaml 

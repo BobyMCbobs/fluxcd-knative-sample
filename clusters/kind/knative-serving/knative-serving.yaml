@@ -1,0 +1,37 @@
+apiVersion: operator.knative.dev/v1beta1
+kind: KnativeServing
+metadata:
+  name: knative-serving
+  namespace: knative-serving
+spec:
+  version: 1.11.0
+  ingress:
+    kourier:
+      enabled: false
+    istio:
+      enabled: false
+  security:
+    securityGuard:
+      enabled: false
+  config:
+    gc:
+      retain-since-create-time: "disabled"
+      retain-since-last-active-time: "disabled"
+      max-non-active-revisions: "5"
+      min-non-active-revisions: "0"
+    features:
+      secure-pod-defaults: "enabled"
+    autoscaler:
+      max-scale: "5"
+      scale-down-delay: "4m"
+      stable-window: "10m"
+    network:
+      # ingress-class: gateway-api.ingress.networking.knative.dev
+      ingress-class: istio.ingress.networking.knative.dev
+      domain-template: "{{.Name}}-{{.Namespace}}.{{.Domain}}"
+    defaults:
+      container-name-template: "{{.Name}}"
+      container-concurrency: "100"
+      enable-service-links: "false"
+    domain:
+      127.0.0.1.sslip.io: ""

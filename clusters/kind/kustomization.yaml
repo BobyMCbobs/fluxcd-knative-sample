@@ -1,0 +1,7 @@
+resources:
+  - ./00-namespaces.yaml
+  - ./knative-operator
+  - ./knative-serving
+  - ./istio-system
+  - ./flux-system
+  - ./apisnoop

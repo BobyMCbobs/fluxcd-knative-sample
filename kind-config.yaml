@@ -1,0 +1,29 @@
+kind: Cluster
+kubeadmConfigPatches:
+  - |
+    apiVersion: kubeadm.k8s.io/v1beta3
+    kind: ClusterConfiguration
+    metadata:
+      name: config
+    apiServer:
+      extraArgs:
+        "audit-webhook-config-file": "/etc/kubernetes/pki/audit/sink.yaml"
+        "audit-policy-file": "/etc/kubernetes/pki/audit/policy.yaml"
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: worker
+    image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
+  - role: worker
+    image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
+  - role: worker
+    image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
+  - role: control-plane
+    image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
+    extraPortMappings:
+      - containerPort: 31080
+        listenAddress: 127.0.0.1
+        hostPort: 80
+    extraMounts:
+      - hostPath: kind-config/audit
+        containerPath: /etc/kubernetes/pki/audit
+        readOnly: True

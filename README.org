@@ -1,0 +1,42 @@
+#+title: Sample local Knative, Istio and APISnoop in Kind
+
+#+begin_quote
+A local Knative with Istio running in Kind configured how I like it
+#+end_quote
+
+* Prepare
+#+begin_src shell :results silent
+VERSION=1.11.5
+mkdir -p ./clusters/kind/knative-{operator,serving}
+curl -sSL -o ./clusters/kind/knative-operator/knative-operator.yaml "https://github.com/knative/operator/releases/download/knative-v${VERSION}/operator.yaml"
+sed -i -e 's/namespace: default/namespace: knative-operator/g' ./clusters/kind/knative-operator/knative-operator.yaml
+curl -sSL -o ./clusters/kind/knative-serving/net-istio.yaml https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.11.0/net-istio.yaml
+curl -sSL -o ./clusters/kind/knative-serving/net-gatway-api.yaml https://github.com/knative-sandbox/net-gateway-api/releases/download/knative-v1.11.0/net-gateway-api.yaml
+#+end_src
+
+* Render
+Istio
+#+begin_src shell :results silent
+istioctl manifest generate -f ./values/istio.yaml > ./clusters/kind/istio-system/istio.yaml
+#+end_src
+
+* Deploy
+Bring up kind
+#+begin_src shell :noexec yes
+kind create cluster --config ./kind-config.yaml
+#+end_src
+(sudo may be required on some systems for access to privileged ports)
+
+option with sudo
+#+begin_src shell :exec no
+sudo cp ~root/.kube/config ~/.kube/config
+#+end_src
+
+#+begin_src shell :results silent
+until kubectl apply -k .; do sleep 1s; done
+#+end_src
+
+WIP
+#+begin_src shell
+flux bootstrap git --url=ssh://git@github.com/BobyMCbobs/sample-local-kind-knative-istio --branch=main --path=clusters/kind
+#+end_src
