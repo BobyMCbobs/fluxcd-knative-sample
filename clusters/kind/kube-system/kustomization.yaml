@@ -1,0 +1,2 @@
+resources:
+  - ./oidc-reviewer-rbac.yaml

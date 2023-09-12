@@ -11,7 +11,7 @@ mkdir -p ./clusters/kind/knative-{operator,serving}
 curl -sSL -o ./clusters/kind/knative-operator/knative-operator.yaml "https://github.com/knative/operator/releases/download/knative-v${VERSION}/operator.yaml"
 sed -i -e 's/namespace: default/namespace: knative-operator/g' ./clusters/kind/knative-operator/knative-operator.yaml
 curl -sSL -o ./clusters/kind/knative-serving/net-istio.yaml https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.11.0/net-istio.yaml
-curl -sSL -o ./clusters/kind/knative-serving/net-gatway-api.yaml https://github.com/knative-sandbox/net-gateway-api/releases/download/knative-v1.11.0/net-gateway-api.yaml
+curl -sSL -o ./clusters/kind/knative-serving/net-gateway-api.yaml https://github.com/knative-sandbox/net-gateway-api/releases/download/knative-v1.11.0/net-gateway-api.yaml
 #+end_src
 
 * Render
