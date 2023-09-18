@@ -47,7 +47,9 @@ spec:
         kind: HelmRepository
         name: apisnoop
   # https://github.com/cncf/apisnoop/blob/main/charts/auditlogger/values.yaml
-  # values:
+  values:
+    service:
+      clusterIP: 10.96.96.96
   #   image:
   #     repository: gcr.io/k8s-staging-apisnoop/auditlogger
   #     tag: ""
