@@ -34,7 +34,7 @@ kind create cluster --config ./kind-config.yaml
 
 option with sudo
 #+begin_src shell :exec no
-sudo cp ~root/.kube/config ~/.kube/config
+read -p "OVERWRITE YOUR KUBECONFIG???" && sudo cp ~root/.kube/config ~/.kube/config
 #+end_src
 
 #+begin_src shell :results silent
