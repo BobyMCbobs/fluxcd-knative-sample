@@ -20,6 +20,11 @@ Istio
 istioctl manifest generate -f ./values/istio.yaml > ./clusters/kind/istio-system/istio.yaml
 #+end_src
 
+FluxCD
+#+begin_src shell :results silent
+flux install --export > ./clusters/kind/flux-system/gotk-components.yaml
+#+end_src
+
 * Deploy
 Bring up kind
 #+begin_src shell :noexec yes
