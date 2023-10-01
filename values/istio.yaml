@@ -40,7 +40,7 @@ spec:
         prometheus: {}
     enablePrometheusMerge: true
   profile: default
-  tag: 1.18.0
+  tag: 1.19.0
   values:
     base:
       enableCRDTemplates: false
@@ -60,7 +60,7 @@ spec:
             secretName: istio-egressgateway-ca-certs
         type: ClusterIP
       istio-ingressgateway:
-        autoscaleEnabled: false
+        autoscaleEnabled: true
         autoscaleMax: 1
         autoscaleMin: 1
         env: {}
@@ -142,7 +142,7 @@ spec:
     istiodRemote:
       injectionURL: ""
     pilot:
-      autoscaleEnabled: false
+      autoscaleEnabled: true
       autoscaleMax: 1
       autoscaleMin: 1
       configMap: true
