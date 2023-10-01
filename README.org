@@ -26,11 +26,20 @@ flux install --export > ./clusters/kind/flux-system/gotk-components.yaml
 #+end_src
 
 * Deploy
+#+begin_src shell
+podman machine init --cpus 4 --memory 4096 --rootful podman-machine-default --user-mode-networking
+#+end_src
+
 Bring up kind
 #+begin_src shell :noexec yes
 kind create cluster --config ./kind-config.yaml
 #+end_src
 (sudo may be required on some systems for access to privileged ports)
+
+Wait for one of the last things to come up
+#+begin_src shell :results silent
+kubectl -n local-path-storage wait --for=condition=Ready pod -l app=local-path-provisioner
+#+end_src
 
 option with sudo
 #+begin_src shell :exec no

@@ -2,25 +2,29 @@ apiVersion: kind.x-k8s.io/v1alpha4
 kind: Cluster
 kubeadmConfigPatches:
   - |
-    apiVersion: kubeadm.k8s.io/v1beta3
     kind: ClusterConfiguration
-    metadata:
-      name: config
     apiServer:
       extraArgs:
-        "audit-webhook-config-file": "/etc/kubernetes/pki/audit/sink.yaml"
-        "audit-policy-file": "/etc/kubernetes/pki/audit/policy.yaml"
+        "audit-webhook-config-file": "/etc/kubernetes/policies/sink.yaml"
+        "audit-policy-file": "/etc/kubernetes/policies/policy.yaml"
+        "audit-webhook-initial-backoff": "300s"
         "service-account-issuer": "https://kubernetes.default.svc"
         "service-account-signing-key-file": "/etc/kubernetes/pki/sa.key"
         "service-account-jwks-uri": "https://kubernetes.default.svc/openid/v1/jwks"
         "service-account-key-file": "/etc/kubernetes/pki/sa.pub"
+      extraVolumes:
+        - name: audit-policies
+          hostPath: /etc/kubernetes/policies
+          mountPath: /etc/kubernetes/policies
+          readOnly: true
+          pathType: "DirectoryOrCreate"
 nodes:
-  - role: worker
-    image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
-  - role: worker
-    image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
-  - role: worker
-    image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
+  # - role: worker
+  #   image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
+  # - role: worker
+  #   image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
+  # - role: worker
+  #   image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
   - role: control-plane
     image: kindest/node:v1.27.2@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
     extraPortMappings:
@@ -29,5 +33,5 @@ nodes:
         hostPort: 80
     extraMounts:
       - hostPath: ./kind-config/audit
-        containerPath: /etc/kubernetes/pki/audit
+        containerPath: /etc/kubernetes/policies
         readOnly: True

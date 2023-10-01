@@ -48,7 +48,7 @@ spec:
     defaultRevision: ""
     gateways:
       istio-egressgateway:
-        autoscaleEnabled: true
+        autoscaleEnabled: false
         env: {}
         name: istio-egressgateway
         secretVolumes:
@@ -60,9 +60,9 @@ spec:
             secretName: istio-egressgateway-ca-certs
         type: ClusterIP
       istio-ingressgateway:
-        autoscaleEnabled: true
-        autoscaleMax: 5
-        autoscaleMin: 3
+        autoscaleEnabled: false
+        autoscaleMax: 1
+        autoscaleMin: 1
         env: {}
         name: istio-ingressgateway
         secretVolumes:
@@ -142,9 +142,9 @@ spec:
     istiodRemote:
       injectionURL: ""
     pilot:
-      autoscaleEnabled: true
-      autoscaleMax: 5
-      autoscaleMin: 3
+      autoscaleEnabled: false
+      autoscaleMax: 1
+      autoscaleMin: 1
       configMap: true
       cpu:
         targetAverageUtilization: 80

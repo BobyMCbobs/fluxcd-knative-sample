@@ -7,8 +7,8 @@ clusters:
 contexts:
   - context:
       cluster: auditsink-cluster
-      user: ""
+      user: auditsink-cluster
     name: auditsink-context
 current-context: auditsink-context
-users: []
-preferences: {}
+users:
+  - name: auditsink-cluster
